@@ -4,7 +4,7 @@ import Button from '@/components/Button/Button';
 
 import { post } from '@/utils/http';
 
-type TForm = {
+export type TForm = {
     [x: string]: {
         value: string;
         error: string;

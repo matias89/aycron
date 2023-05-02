@@ -6,12 +6,12 @@ import Button from '@/components/Button/Button';
 
 const Home = () => {
     const router = useRouter();
-    const { user, isLogged, logout } = useUser();
+    const { user, isLogged, logout, isLoaded } = useUser();
     useEffect(() => {
-        if (!isLogged) {
+        if (!isLogged && isLoaded) {
             router.push('/users/login');
         }
-    }, [isLogged, router]);
+    }, [isLogged, router, isLoaded]);
     const handleOnLogout = () => {
         logout();
         router.push('/users/login');

@@ -5,7 +5,8 @@ const headers = {
 
 const get = async (url: string) => {
     const response = await fetch(`${baseUrl}/${url}`, { headers });
-    return response.json();
+    const data = await response.json();
+    return data;
 };
 
 const post = async (url: string, body: any) => {
@@ -14,7 +15,8 @@ const post = async (url: string, body: any) => {
         headers,
         body: JSON.stringify(body),
     });
-    return response.json();
+    const data = await response.json();
+    return data;
 }
 
 export {

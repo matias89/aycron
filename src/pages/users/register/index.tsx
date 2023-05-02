@@ -4,12 +4,7 @@ import Button from '@/components/Button/Button';
 
 import { post } from '@/utils/http';
 
-export type TForm = {
-    [x: string]: {
-        value: string;
-        error: string;
-    };
-};
+import { TForm } from '@/utils/types';
 
 const Register = () => {
     const [form, setForm] = useState<TForm>({

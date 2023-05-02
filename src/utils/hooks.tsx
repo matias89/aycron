@@ -5,17 +5,20 @@ export const UserContext = createContext({
     isLogged: false,
     login: (user: string) => {},
     logout: () => {},
+    isLoaded: false,
 });
 
 export const UserProvider = ({ children }: any) => {
     const [user, setUser] = useState('');
     const [isLogged, setIsLogged] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         const user = window.sessionStorage.getItem('user');
         const isLogged = window.sessionStorage.getItem('isLogged') === 'true';
         setUser(user || '');
         setIsLogged(isLogged);
+        setIsLoaded(true);
     }, []);
 
     const login = (userName: string) => {
@@ -39,6 +42,7 @@ export const UserProvider = ({ children }: any) => {
                 isLogged,
                 login,
                 logout,
+                isLoaded,
             }}
         >
             {children}

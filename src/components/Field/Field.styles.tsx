@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledField = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     label {
         margin-bottom: 0.5rem;
     }
@@ -12,9 +12,11 @@ export const StyledField = styled.div`
         border-radius: 0.25rem;
         font-size: 1rem;
         padding: 0.5rem;
+        margin-bottom: 0.5rem;
     }
     p {
         color: red;
         font-size: 0.75rem;
+        margin-bottom: 0.5rem;
     }
 `;

@@ -7,9 +7,11 @@ type TypeLayout = {
 const Layout = ({ children }: TypeLayout) => {
     return (
         <StyledLayout>
-        <header>Header</header>
+        <header>
+            <h1>Aycron Technical Test</h1>
+        </header>
         <main>{children}</main>
-        <footer>Footer</footer>
+        <footer>Developed by Matías Aybar | May 2023</footer>
         </StyledLayout>
     );
 };

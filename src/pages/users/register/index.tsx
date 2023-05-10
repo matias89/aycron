@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useUser } from '@/utils/hooks';
+
 import Field from '@/components/Field/Field';
 import Button from '@/components/Button/Button';
 
@@ -7,6 +10,8 @@ import { post } from '@/utils/http';
 import { TForm } from '@/utils/types';
 
 const Register = () => {
+    const router = useRouter();
+    const { login } = useUser();
     const [form, setForm] = useState<TForm>({
         name: {
             value: '',
@@ -43,7 +48,7 @@ const Register = () => {
             },
         });
     };
-    const handleOnRegister = () => {
+    const handleOnRegister = async () => {
         const errors: TForm = {};
         Object.keys(form).forEach((key) => {
             if (form[key].value === '') {
@@ -61,13 +66,18 @@ const Register = () => {
             return;
         } else {
             const { name, email, role, password } = form;
-            const response = post('users/register', {
+            const response = await post('users/register', {
                 name: name.value,
                 email: email.value,
                 role: role.value,
                 password: password.value,
             });
-            console.log('response', response);
+            if (response.status !== 201) {
+                alert(response.message);
+            } else {
+                login(name.value);
+                router.push('/home');
+            }
         }
     };
     return (

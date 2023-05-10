@@ -10,10 +10,23 @@ const get = async (url: string) => {
 };
 
 const post = async (url: string, body: any) => {
+    try {
+        const response = await fetch(`${baseUrl}/${url}`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(body),
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log('Error >>>', error);
+    }
+}
+
+const remove = async (url: string) => {
     const response = await fetch(`${baseUrl}/${url}`, {
-        method: 'POST',
+        method: 'DELETE',
         headers,
-        body: JSON.stringify(body),
     });
     const data = await response.json();
     return data;
@@ -22,4 +35,5 @@ const post = async (url: string, body: any) => {
 export {
     get,
     post,
+    remove,
 }

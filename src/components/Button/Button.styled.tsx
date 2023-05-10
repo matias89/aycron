@@ -8,7 +8,6 @@ export const StyledButton = styled.button`
     cursor: pointer;
     font-size: 1rem;
     padding: 0.5rem;
-    margin-top: 0.5rem;
     margin-right: 0.5rem;
     &:hover {
         background-color: #444;

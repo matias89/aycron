@@ -24,7 +24,7 @@ const WarehouseRegisterPage = () => {
         });
     };
 
-    const handleOnRegister = () => {
+    const handleOnRegister = async () => {
         const errors: TForm = {};
         Object.keys(form).forEach((key) => {
             if (form[key].value === '') {
@@ -41,7 +41,7 @@ const WarehouseRegisterPage = () => {
             });
         } else {
             const { name, code, address, state, country, zip } = form;
-            const response = post('warehouses', {
+            const response = await post('warehouses', {
                 name: name.value,
                 code: code.value,
                 address: address.value,
@@ -49,7 +49,14 @@ const WarehouseRegisterPage = () => {
                 country: country.value,
                 zip: zip.value, 
             });
-            console.log('response', response);
+            if (response.status !== 200) {
+                // Error
+                alert(response.message);
+            } else {
+                setForm(warehouseFormInitialState);
+                alert('Added successfully. You will be redirected to HOME');
+                router.push('/home');
+            }
         }
     };
 
@@ -65,7 +72,9 @@ const WarehouseRegisterPage = () => {
 
     return (
         <div>
-            <h1>Register Warehouse</h1>
+            <h2>Register Warehouse</h2>
+            <p>Add a new register</p>
+            <hr />
             <Field
                 label="Name"
                 name="name"
@@ -115,7 +124,7 @@ const WarehouseRegisterPage = () => {
                 onChange={handleOnChangeValue}
             />
             <Button type="button" onClick={handleOnRegister}>Register</Button>
-            <Button type="button" onClick={handleOnCancel}>Cancelar</Button>
+            <Button type="button" onClick={handleOnCancel}>Cancel</Button>
         </div>
     );
 };

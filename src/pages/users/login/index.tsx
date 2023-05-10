@@ -5,7 +5,7 @@ import { useUser } from '@/utils/hooks';
 import Field from '@/components/Field/Field';
 import Button from '@/components/Button/Button';
 import { post } from '@/utils/http';
-import type { TForm } from '@/pages/users/register/index';
+import type { TForm } from '@/utils/types';
 
 const Login = () => {
     const router = useRouter();
@@ -35,6 +35,9 @@ const Login = () => {
                 error: '',
             },
         });
+    };
+    const handleOnRegister = async () => {
+        router.push('/users/register');
     };
     const handleOnLogin = async () => {
         const errors: TForm = {};
@@ -97,6 +100,7 @@ const Login = () => {
                     onChange={handleOnChangeValue}
                 />
                 <Button type="button" onClick={handleOnLogin}>Login</Button>
+                <Button type="button" onClick={handleOnRegister}>Register</Button>
             </div>
         </div>
     );

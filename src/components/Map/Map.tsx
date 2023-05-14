@@ -1,6 +1,6 @@
 import { GoogleMap, Marker } from '@react-google-maps/api';
 
-import { StyledItemList, StyledNearLocation, StyledCurrentLocation } from './map.styles';
+import { StyledItemList, StyledNearLocation, StyledCurrentLocation } from './Map.styles';
 
 const MapComponent = ({ isLoaded, address, center }) => {
     return (

@@ -36,14 +36,19 @@ const Home = () => {
             fetchWarehouses(); // podria remover solo el item para no voolver a llamar al servicio
         }
     };
-    const handleOnDownload = (code: string) => {
-        alert('TODO: download >>> ' + code);
+    const handleOnDownload = (filename: string) => {
+        //alert('TODO: download >>> ' + code);
+        window.location.href = `http://localhost:3001/warehouses/file/${filename}`;
+    };
+    const handleOnChangePage = () => {
+        router.push('/map');
     };
     return (
         <div>
             <h2>Welcome {user.toUpperCase()}</h2>
             <hr />
             <Button type="button" onClick={handleOnAdd}>Add new warehouse</Button>
+            <Button type="button" onClick={handleOnChangePage}>Search place</Button>
             <Button type="button" onClick={handleOnLogout}>Logout</Button>
             <hr />
             {warehouses.length ? (

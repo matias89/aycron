@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useUser } from '@/utils/hooks';
 
 import Field from '@/components/Field/Field';
@@ -11,7 +11,7 @@ import { TForm } from '@/utils/types';
 
 const WarehouseRegisterPage = () => {
     const router = useRouter();
-    const { isLogged, isLoaded } = useUser();
+    const { isLogged, isLoaded: isPageLoaded } = useUser();
     const [form, setForm] = useState<TForm>(warehouseFormInitialState);
 
     const handleOnChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +22,19 @@ const WarehouseRegisterPage = () => {
                 error: '',
             },
         });
+    };
+
+    const getLatLongFromAddress = async () => {
+        const { address, state, country, zip } = form;
+        const response = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${address.value},+${state.value},+${country.value},+${zip.value}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
+        );
+        const data = await response.json();
+        if (data.status === 'OK') {
+            const { lat, lng } = data.results[0].geometry.location;
+            return { lat, lng };
+        }
+        return null;
     };
 
     const handleOnRegister = async () => {
@@ -41,14 +54,22 @@ const WarehouseRegisterPage = () => {
             });
         } else {
             const { name, code, address, state, country, zip } = form;
-            const response = await post('warehouses', {
-                name: name.value,
-                code: code.value,
-                address: address.value,
-                state: state.value,
-                country: country.value,
-                zip: zip.value, 
-            });
+            const { lat, lng } = await getLatLongFromAddress();
+            const uploadedFile = document.getElementById('file') as HTMLInputElement;
+            const formData = new FormData();
+            formData.append('file', uploadedFile.files[0]);
+            formData.append('name', name.value);
+            formData.append('code', code.value);
+            formData.append('address', address.value);
+            formData.append('state', state.value);
+            formData.append('country', country.value);
+            formData.append('zip', zip.value);
+            formData.append('lat', lat.toString());
+            formData.append('lng', lng.toString());
+
+            console.log('formData', formData);
+
+            const response = await post('warehouses', formData, 'multipart/form-data');
             if (response.status !== 200) {
                 // Error
                 alert(response.message);
@@ -65,10 +86,10 @@ const WarehouseRegisterPage = () => {
     };
 
     useEffect(() => {
-        if (!isLogged && isLoaded) {
+        if (!isLogged && isPageLoaded) {
             router.push('/users/login');
         }
-    }, [isLogged, router, isLoaded]);
+    }, [isLogged, router, isPageLoaded]);
 
     return (
         <div>
@@ -121,6 +142,14 @@ const WarehouseRegisterPage = () => {
                 type="text"
                 value={form.zip.value}
                 error={form.zip.error}
+                onChange={handleOnChangeValue}
+            />
+            <Field
+                type="file"
+                label="File"
+                name="file"
+                value={form.file.value}
+                error={form.file.error}
                 onChange={handleOnChangeValue}
             />
             <Button type="button" onClick={handleOnRegister}>Register</Button>

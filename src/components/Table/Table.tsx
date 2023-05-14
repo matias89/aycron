@@ -15,7 +15,7 @@ const Row = ({ item, onDownload, onDelete }: TRow) => {
             <Col>{item.code}</Col>
             <Col>{item.address}</Col>
             <Col>
-                <Button onClick={() => onDownload(item.code)}>
+                <Button onClick={() => onDownload(item.filename)}>
                     <FontAwesomeIcon icon={faDownload} />
                 </Button>
                 <Button onClick={() => onDelete(item.code)}>

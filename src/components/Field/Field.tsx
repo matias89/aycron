@@ -1,7 +1,7 @@
 import { StyledField } from './Field.styles';
 
 type TypeField = {
-    label: string;
+    label?: string;
     name: string;
     type: string;
     value?: string;
@@ -12,7 +12,7 @@ type TypeField = {
 const Field = ({ label, name, type, value, onChange, error, ...props }: TypeField) => {
     return (
         <StyledField>
-            <label htmlFor={name}>{label}</label>
+            {label && <label htmlFor={name}>{label}</label>}
             <input
                 id={name}
                 name={name}

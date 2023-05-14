@@ -23,6 +23,10 @@ const warehouseFormInitialState = {
         value: '',
         error: '',
     },
+    file: {
+        value: '',
+        error: '',
+    },
 };
 
 export {

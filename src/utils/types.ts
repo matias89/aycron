@@ -8,11 +8,7 @@ export type TForm = {
 export type TRow = {
     onDownload: (code: string) => void;
     onDelete: (code: string) => void;
-    item: {
-        name: string;
-        code: string;
-        address: string;
-    };
+    item: TItem;
 };
 
 export type Tcol = {
@@ -27,4 +23,18 @@ export type TTable = {
         code: string;
         address: string;
     }[];
+};
+
+export type TItem = {
+    name: string;
+    code: string;
+    address: string;
+    filename?: string;
+    lat?: string;
+    lng?: string;
+    state?: string;
+    city?: string;
+    zip?: string;
+    country?: string;
+    distance?: number;
 };

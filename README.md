@@ -22,7 +22,7 @@
 
 ## :dart: About ##
 
-This repository contains the frontend of the project for a technical test. It allows to create users, login, load warehouses and view a map with proximity finder.
+This repository contains the frontend of the project for a technical test. It allows to create users, login, load warehouses and view a map with proximity finder. [You must to be running the API proyect to be able to use it](https://github.com/matias89/aycron-api).
 
 ## :rocket: Technologies ##
 
